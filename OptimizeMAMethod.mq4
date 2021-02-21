@@ -2,16 +2,16 @@
 #property link      "https://www.mql5.com"
 #property version   "1.00"
 #property strict
-
+// only for GBPUSD H1
 input int      Magic             = 137;
 input double   volume            = 0.01;
 double         newVolume         = 0.01;
 input int      slPoint           = 200;
 input int      tpPoint           = 600;
 
-input int      pointStart        = 200;
-input int      pointTrailing     = 200; 
-input int      pointStep         = 200;
+input int      pointStart        = 290;
+input int      pointTrailing     = 290; 
+input int      pointStep         = 290;
 
 bool           enterSell         = false;
 bool           enterBuy          = false;   
@@ -19,11 +19,20 @@ input int      MA1_period        = 10;
 input int      MA2_period        = 29;
 input int      MA3_period        = 51;
 
+datetime tradeTime;
+
 int OnInit() { return(INIT_SUCCEEDED); }
 
 void OnDeinit(const int reason) {}
 
 void OnTick() {
+/*
+   if (iTime(Symbol(), 0, 0) == tradeTime) {
+      return;
+   }
+   tradeTime = iTime(Symbol(), 0, 0);
+   */
+
    int signal = -1; // no signal
    double MA1 = iMA(Symbol(),Period(),MA1_period,0,MODE_EMA,PRICE_CLOSE,0);
    double MA2 = iMA(Symbol(),Period(),MA2_period,0,MODE_EMA,PRICE_CLOSE,0);
@@ -56,7 +65,7 @@ void OnTick() {
        enterBuy = false;
      }
   } else {
-     Trailling();
+     //Trailling();
   }
 }
 
